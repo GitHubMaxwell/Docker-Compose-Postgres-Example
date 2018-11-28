@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: node-app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pg
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=pg
+  pg:
+    image: postgres:alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+volumes:
+  pgdata:
